@@ -1,3 +1,4 @@
+//initial input
 var myBoard = {
 	"board": [
 		["1", "1", "1", "*", "*", "*"],
@@ -9,21 +10,31 @@ var myBoard = {
     ]
 };
 
+//board object
 var Board = function(input) {
-	this.spaces = input.board;
-	this.exit = '[2][5]';
-	this.vehicles = []; 
+	//hold array of squares
+	this.board = input.board;
 	
+	//hold array of vehicles
+	this.vehicles = [];
 };
 
-Board.prototype.placeVehicle = function(size, position, direction) {
-	this.vehicles.push(new Vehicle(size, position, direction));
-}
-
-
+//vehicle object 
 var Vehicle = function(size, position, direction) {
 	this.size = size;
-    this.position = position;
     this.direction = direction;
 };
+
+
+
+
+var board = new Board(myBoard);
+
+
+
+
+
+
+
+
 
