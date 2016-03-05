@@ -46,16 +46,28 @@ Board.prototype.getVehicle = function(id) {
 	//loops through the results and returns the square position of that vehicle
 	for(var y=0; y < 6; y++) {
 		if(results[y] >= 0) { 
-			console.log('found block at board.square [' + results.indexOf(results[y]) + '][' + results[y] + ']' );
-			console.log(board.square[results.indexOf(results[y])][results[y]]);
+			//console.log('found block at board.square [' + results.indexOf(results[y]) + '][' + results[y] + ']' );
+			//console.log(board.square[results.indexOf(results[y])][results[y]]);
+			var coord = {'x':results.indexOf(results[y]), 'y':results[y]};
+			return coord;
 		}
 	}
 };
 
 Board.prototype.moveVehicle = function(id, direction) {
 	//use getVehicle()
-	
+	var coord = board.getVehicle(id);
+	console.log(coord);
+	//loop through vehicle array 
+	for(var x=0; x<board.vehicles.length; x++) {
+		board.vehicles.[x].indexOf(id);
+	}
 	//move left/right/up/down
+	console.log(direction);
+	if (direction = 'left') {
+		
+		console.log('bleh');
+	}
 		//validate legal move
 	
 	//update squares
