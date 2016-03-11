@@ -10,75 +10,175 @@ var myBoard = {
     ]
 };
 
-//board object
+//the models?
+//a model of the board. this holds the size of the board, and the spaces, each space either has a car in it or it is empty, and the exit square
 var Board = function(input) {
 	//hold array of squares
 	this.square = input.board;
-	
-	//hold array of vehicles
-	this.vehicles = [];
-	
+	this.exit = this.square[2][5];
 };
 
-//vehicle object 
-var Vehicle = function(id, size, orientation, position) {
-	this.id = id;
+//a model of the vehicle, the vehicle has a size, an orientation, and a starting position that is the top left most block on the board
+var Vehicle = function(name, size, orientation, row, collumn) {
+	this.name = name
 	this.size = size;
     this.orientation = orientation;
-    this.position = position; 
+    this.row = row;
+    this.collumn = collumn;
 };
 
-//put vehicles on board 
+//there's probably a way to create vehicles based on the input string/json? loop through the string and find the length of matching letters, but for now..
+var v1 = new Vehicle('1', 3, 'x', 0, 0);
+var v2 = new Vehicle('2', 2, 'y', 1, 0);
+var v3 = new Vehicle('3', 2, 'y', 1, 2);
+var v4 = new Vehicle('4', 3, 'x', 1, 3);
 
-//move vehicles 
-
-Board.prototype.setVehicle = function(id, size, orientation, position) {
-	board.vehicles.push(new Vehicle(id, size, orientation, position));
-};
-
-Board.prototype.getVehicle = function(id) {
-	var results = [];
-	//searches the board for the upper left most position
-	for(var x=0; x < 6; x++) {
-		results.push(board.square[x].indexOf(id));
-	}
-	
-	//loops through the results and returns the square position of that vehicle
-	for(var y=0; y < 6; y++) {
-		if(results[y] >= 0) { 
-			//console.log('found block at board.square [' + results.indexOf(results[y]) + '][' + results[y] + ']' );
-			//console.log(board.square[results.indexOf(results[y])][results[y]]);
-			var coord = {'x':results.indexOf(results[y]), 'y':results[y]};
-			return coord;
-		}
-	}
-};
-
-Board.prototype.moveVehicle = function(id, direction) {
-	//use getVehicle()
-	var coord = board.getVehicle(id);
-	console.log(coord);
-	//loop through vehicle array 
-	for(var x=0; x<board.vehicles.length; x++) {
-		board.vehicles.[x].indexOf(id);
-	}
-	//move left/right/up/down
-	console.log(direction);
-	if (direction = 'left') {
-		
-		console.log('bleh');
-	}
-		//validate legal move
-	
-	//update squares
-	
-};
-
-
+//make a board
 var board = new Board(myBoard);
-board.setVehicle('1', 3, 'x', '[0][0]');
-board.setVehicle(2, 'y');
-board.setVehicle(2, 'y');
+
+//The way the game works / the controller? 
+
+
+function moveRight(id, board){
+	
+	//a user chooses a car to move and the direction to move the car in 
+	console.log('you want to move the vehicle right');
+	//the program finds the starting position
+	console.log('it starts at board.square[' + id.row + '][' + id.collumn + ']');
+	//the program finds the orientation of the vehicle 
+	console.log('it is oriented in the ' + id.orientation + ' direction');
+	//is the space after the vehicle clear?
+	if(board.square[id.row][id.collumn + id.size] === "*") {
+		console.log('the space ahead is clear');
+	} else {
+		console.log('you are blocked!');
+		alert('you are blocked');
+		return;
+	}
+	//is the vehicle still on the board? 
+	if(board.square[id.row][id.collumn + id.size] === undefined) {
+		console.log('you hit a wall');
+		alert('you hit a wall');
+		return;
+	}
+	//the new starting point is
+	console.log('the new position is [' + id.row + '][' + (id.collumn + 1) + ']');
+	//update vehicle model
+	id.row = id.row;
+	id.collumn = id.collumn + 1;
+	//update board model 
+	board.square[id.row][id.collumn - 1] = '*';
+	board.square[id.row][id.collumn + id.size - 1] = id.name;
+	render();
+}
+
+function moveLeft(id, board){
+	
+	//a user chooses a car to move and the direction to move the car in 
+	console.log('you want to move the vehicle left');
+	//the program finds the starting position
+	console.log('it starts at board.square[' + id.row + '][' + id.collumn + ']');
+	//the program finds the orientation of the vehicle 
+	console.log('it is oriented in the ' + id.orientation + ' direction');
+	//is the space before the vehicle clear?
+	if(board.square[id.row][id.collumn - 1] === "*") {
+		console.log('the space behind you is clear');
+	} else {
+		console.log('you are blocked!');
+		alert('you are blocked');
+		return;
+	}
+	//is the vehicle still on the board?
+	if(board.square[id.row][id.collumn - 1] === undefined ) {
+		console.log('you hit a wall');
+		alert('you hit a wall');
+		return;
+	} 
+	//the new starting point is
+	console.log('the new position is [' + id.row + '][' + (id.collumn - 1) + ']');
+	//update vehicle model
+	id.row = id.row;
+	id.collumn = id.collumn - 1;
+	//update board model 
+	board.square[id.row][id.collumn] = id.name;
+	board.square[id.row][id.collumn + id.size] = "*";
+	render();
+}
+
+function moveUp(id, board){
+	
+	//a user chooses a car to move and the direction to move the car in 
+	console.log('you want to move the vehicle up');
+	//the program finds the starting position
+	console.log('it starts at board.square[' + id.row + '][' + id.collumn + ']');
+	//the program finds the orientation of the vehicle 
+	console.log('it is oriented in the ' + id.orientation + ' direction');
+	//is the vehicle still on the board? 
+	if(board.square[id.row - 1][id.collumn ] === undefined) {
+		console.log('you hit a wall');
+		alert('you hit a wall');
+		return;
+	}
+	//is the space above the vehicle clear?
+	if(board.square[id.row - 1][id.collumn] === "*") {
+		console.log('the space ahead is clear');
+	} else {
+		console.log('you are blocked!');
+		alert('you are blocked');
+		return;
+	}
+	//the new starting point is
+	console.log('the new position is [' + (id.row - 1) + '][' + id.collumn + ']');
+	//update vehicle model
+	id.row = id.row - 1;
+	id.collumn = id.collumn;
+	//update board model 
+	board.square[id.row][id.collumn] = id.name;
+	board.square[id.row + id.size][id.collumn] = '*';
+	render();
+}
+
+function moveDown(id, board){
+	
+	//a user chooses a car to move and the direction to move the car in 
+	console.log('you want to move the vehicle down');
+	//the program finds the starting position
+	console.log('it starts at board.square[' + id.row + '][' + id.collumn + ']');
+	//the program finds the orientation of the vehicle 
+	console.log('it is oriented in the ' + id.orientation + ' direction');
+	//is the space below the vehicle clear?
+	console.log(board.square[id.row + id.size + 1][id.collumn])
+	if(board.square[id.row + id.size][id.collumn] === "*") {
+		console.log('the space below you is clear');
+	} else {
+		console.log('you are blocked!');
+		alert('you are blocked');
+		return;
+	}
+	//is the vehicle still on the board?
+	if(board.square[id.row + 1][id.collumn] === undefined ) {
+		console.log('you hit a wall');
+		alert('you hit a wall');
+		return;
+	} 
+	//the new starting point is
+	console.log('the new position is [' + (id.row + 1) + '][' + id.collumn + ']');
+	//update vehicle model
+	id.row = id.row + 1;
+	id.collumn = id.collumn;
+	//update board model 
+	board.square[id.row - 1][id.collumn] = '*';
+	board.square[id.row + id.size - 1][id.collumn] = id.name;
+	render();
+}
+
+
+//when the red car hits the exit square, the game is over
+
+
+
+
+//the view?
 
 var render = function() {
         $('#row1').html(JSON.stringify(board.square[0]));

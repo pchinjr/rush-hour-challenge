@@ -6,7 +6,7 @@
         <script type="text/javascript" src="./js/game.js"></script>
     </head>
     <body>
-        <h1>SOMETHING TO SEE HERE</h1>
+        <h1>WELCOME TO CLUSTERTRUCK!!!</h1>
         <div id="row1"></div>
         <div id="row2"></div>
         <div id="row3"></div>
@@ -14,16 +14,34 @@
         <div id="row5"></div>
         <div id="row6"></div>
         </br>
-        <div id="vehicles"></div>
+        
+        <select id="vin">
+            <option>v1</option>
+            <option>v2</option>
+            <option>v3</option>
+            <option>v4</option>
+        </select>
+        
+        <button id="up">UP!</button>
+        <button id="down">DOWN!</button>
+        <button id="left">LEFT!</button>
+        <button id="right">RIGHT!</button>
         
     <script>
         render();
         
-        $('#1left').on('click', function(){
-            board.board[0] = ['*','1','1','1','*','*'];
-            render();
-            $('#1left').hide();
+        $('#up').on('click', function(){
+            moveUp(window[$('#vin').val()], board);
         });
+        $('#right').on('click', function(){
+            moveRight(window[$('#vin').val()], board);
+        })
+        $('#left').on('click', function(){
+            moveLeft(window[$('#vin').val()], board);
+        })
+        $('#down').on('click', function(){
+            moveDown(window[$('#vin').val()], board);
+        })
         
     </script>    
     </body>
