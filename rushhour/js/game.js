@@ -34,6 +34,9 @@ var Vehicle = function(name, size, orientation, row, collumn) {
     this.collumn = collumn;
 };
 
+//initalize the board
+var board = new Board(6, 6, myBoard);
+
 //there's probably a way to create vehicles based on the input string/json? loop through the string and find the length of matching letters, but for now..
 var v1 = new Vehicle('1', 3, 'x', 0, 0);
 var v2 = new Vehicle('2', 2, 'y', 1, 0);
@@ -50,16 +53,46 @@ var vr = new Vehicle('r', 2, 'x', 2, 3);
 
 //assign the vehicles to the board spaces
 	//take the vehicle variable and put it in the board space array
+function setVehicle(vehicle, board) {
+	board.spaces[vehicle.row][vehicle.row] = vehicle;
+};
+
+setVehicle(v1, board);
+setVehicle(v2, board);
+setVehicle(v3, board);
+setVehicle(v4, board);
+setVehicle(v5, board);
+setVehicle(v6, board);
+setVehicle(v7, board);
+setVehicle(v8, board);
+setVehicle(v9, board);
+setVehicle(va, board);
+setVehicle(vb, board);
+setVehicle(vr, board);
 
 //move a vehicle
-	//what direction is the vehicle moving?
-		//move vehicle up or down
-		//move vehicle left or right
-	//is the space empty in the direction it wants to travel
-		//is the space above empty?
-		//is the space below empty?
+//what direction is the vehicle moving?
+	//move vehicle up or down
+	//move vehicle left or right
+function updateVehicle(vehicle, direction) {
+	console.log("checking if the way is clear");
+	if (checkSpace(direction)) {
+		console.log("it's clear");
+	};
+	console.log("vehicle updated");
+};
+//is the space empty in the direction it wants to travel
+function checkSpace(direction) {
+	//is the space above empty?
+	//is the space below empty?
+	console.log("Is it empty? " + direction);
+	return true;
+};
+
 
 //is the red car at the exit?
+
+
 
 function moveRight(id, board){
 
